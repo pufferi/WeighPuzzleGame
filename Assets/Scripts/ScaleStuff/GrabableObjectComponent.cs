@@ -14,12 +14,11 @@ public class GrabableObjectComponent : MonoBehaviour
     private float grabDistance;
     private Vector3 currentTargetPosition;
 
-    // Scroll configuration
-    [SerializeField]
-    private float scrollSensitivity = 0.01f; // How much distance changes per scroll unit
-    [SerializeField]
-    private float minGrabDistance = 0.2f;
-    [SerializeField]
+
+    private float scrollSensitivity = 0.005f; // How much distance changes per scroll unit
+  
+    private float minGrabDistance = 3f;
+
     private float maxGrabDistance = 20f;
 
     // Force-follow configuration
