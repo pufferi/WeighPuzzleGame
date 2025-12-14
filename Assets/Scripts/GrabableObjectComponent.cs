@@ -67,7 +67,7 @@ public class GrabableObjectComponent : MonoBehaviour
             }
             grabDistance = Vector3.Distance(mainCamera.transform.position, transform.position);
             currentTargetPosition = transform.position;
-            Debug.Log("Object grabbed!");
+            //Debug.Log("Object grabbed!");
         }
     }
 
@@ -82,7 +82,7 @@ public class GrabableObjectComponent : MonoBehaviour
                 rb.isKinematic = wasKinematic;
                 rb.collisionDetectionMode = previousCollisionDetection;
             }
-            Debug.Log("Object released!");
+            //Debug.Log("Object released!");
         }
     }
 

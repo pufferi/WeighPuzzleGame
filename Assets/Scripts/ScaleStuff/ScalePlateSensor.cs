@@ -6,7 +6,7 @@ public class ScalePlateSensor : MonoBehaviour
 {
     private Transform pivotPoint;
 
-    private List<WeightItem> itemsOnPan = new List<WeightItem>();
+    private List<WeightItemComponent> itemsOnPan = new List<WeightItemComponent>();
 
     private float totalMass = 0f;
 
@@ -45,10 +45,11 @@ public class ScalePlateSensor : MonoBehaviour
         }
     }
 
+
     // 物体进入盘子时
     void OnTriggerEnter(Collider other)
     {
-        WeightItem wi = other.gameObject.GetComponent<WeightItem>();
+        WeightItemComponent wi = other.gameObject.GetComponent<WeightItemComponent>();
         if (wi != null && !itemsOnPan.Contains(wi))
         {
             itemsOnPan.Add(wi);
@@ -58,7 +59,7 @@ public class ScalePlateSensor : MonoBehaviour
     // 物体离开盘子时
     void OnTriggerExit(Collider other)
     {
-        WeightItem wi = other.gameObject.GetComponent<WeightItem>();
+        WeightItemComponent wi = other.gameObject.GetComponent<WeightItemComponent>();
         if (wi != null && itemsOnPan.Contains(wi))
         {
             itemsOnPan.Remove(wi);
@@ -74,5 +75,12 @@ public class ScalePlateSensor : MonoBehaviour
         {
             totalMass += i.realMass;
         }
+    }
+
+    public void ApplyExternalForce(Vector3 force)
+    {
+        Debug.Log(totalMass);
+        Debug.Log("Applying external force: " + force);
+        plateToAddForce.AddForceAtPosition(force, pivotPoint.position);
     }
 }
