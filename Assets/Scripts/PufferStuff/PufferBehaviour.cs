@@ -45,14 +45,17 @@ public class PufferBehaviour : MonoBehaviour
     {
         
     }
-    
-    public void PufferChangeColor(Color color, float time = 2f)
+
+
+    public Coroutine PufferChangeColor(Color color, float time = 2f)
     {
-        if(_pufferChangeColorCoroutine != null)
+        if (_pufferChangeColorCoroutine != null)
         {
             StopCoroutine(_pufferChangeColorCoroutine);
         }
+
         _pufferChangeColorCoroutine = StartCoroutine(PufferChangeColorCoroutine(color, time));
+        return _pufferChangeColorCoroutine;
     }
 
     IEnumerator PufferChangeColorCoroutine(Color color, float time)
@@ -78,14 +81,15 @@ public class PufferBehaviour : MonoBehaviour
 
     }
 
-
-    public void PufferInflate(float inflateTime)
+    public Coroutine PufferInflate(float inflateTime)
     {
         if (_inflateDeflateCoroutine != null)
         {
             StopCoroutine(_inflateDeflateCoroutine);
         }
+
         _inflateDeflateCoroutine = StartCoroutine(PufferInflateCoroutine(inflateTime));
+        return _inflateDeflateCoroutine;
     }
     IEnumerator PufferInflateCoroutine(float inflateTime)
     {
@@ -105,15 +109,15 @@ public class PufferBehaviour : MonoBehaviour
     }
 
 
-    public void PufferDeflate(float deflateTime)
+    public Coroutine PufferDeflate(float deflateTime)
     {
         if (_inflateDeflateCoroutine != null)
         {
             StopCoroutine(_inflateDeflateCoroutine);
         }
-        _inflateDeflateCoroutine = StartCoroutine(PufferDeflateCoroutine(deflateTime));
 
-        PufferStopSplash();
+        _inflateDeflateCoroutine = StartCoroutine(PufferDeflateCoroutine(deflateTime));
+        return _inflateDeflateCoroutine;
     }
 
     IEnumerator PufferDeflateCoroutine(float deflateTime = 2f)
