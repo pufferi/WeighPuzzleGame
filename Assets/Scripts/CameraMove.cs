@@ -6,18 +6,11 @@ public class CameraMove : MonoBehaviour
     [SerializeField]
     private float moveSpeed = 5f;
 
+    [SerializeField]
+    private InputActionAsset inputActions;
     private InputAction moveAction;
 
-    void Awake()
-    {
-        // Create a 2DVector composite for WASD movement using the new Input System
-        moveAction = new InputAction(name: "Move", type: InputActionType.Value, expectedControlType: "Vector2");
-        moveAction.AddCompositeBinding("2DVector")
-            .With("Up", "<Keyboard>/w")
-            .With("Down", "<Keyboard>/s")
-            .With("Left", "<Keyboard>/a")
-            .With("Right", "<Keyboard>/d");
-    }
+
 
     void OnEnable()
     {
@@ -29,28 +22,18 @@ public class CameraMove : MonoBehaviour
         moveAction.Disable();
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
 
+    void Awake()
+    {
+        moveAction = inputActions.FindActionMap("Player").FindAction("Move");
     }
 
-    // Update is called once per frame
     void Update()
     {
         Vector2 input = moveAction.ReadValue<Vector2>();
         if (input.sqrMagnitude > 0f)
         {
-            // Move along camera's XZ plane based on current facing
-            Vector3 forward = transform.forward;
-            forward.y = 0f;
-            forward.Normalize();
-
-            Vector3 right = transform.right;
-            right.y = 0f;
-            right.Normalize();
-
-            Vector3 move = right * input.x + forward * input.y;
+            Vector3 move = Vector3.right * input.x + Vector3.forward * input.y;
             transform.position += move * moveSpeed * Time.deltaTime;
         }
     }

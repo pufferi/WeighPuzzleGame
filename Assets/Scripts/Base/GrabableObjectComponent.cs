@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class GrabableObjectComponent : MonoBehaviour
 {
+    [SerializeField]
+    private InputActionAsset inputActions;
     private InputAction grabAction;
 
     private bool isGrabbed = false;
@@ -29,23 +31,28 @@ public class GrabableObjectComponent : MonoBehaviour
     [SerializeField]
     private float stopDistance = 0.01f;     // consider reached when within this distance
 
+
+
     void Awake()
     {
         mainCamera = Camera.main;
         rb = GetComponent<Rigidbody>();
-        grabAction = new InputAction(binding: "<Mouse>/leftButton");
-        grabAction.started += _ => Grab();
-        grabAction.canceled += _ => Release();
+        grabAction = inputActions.FindActionMap("Player").FindAction("GrabItem");
         currentTargetPosition = transform.position;
+
     }
 
     void OnEnable()
     {
+        grabAction.performed += _ => Grab();
+        grabAction.canceled += _ => Release();
         grabAction.Enable();
     }
 
     void OnDisable()
     {
+        grabAction.performed -= _ => Grab();
+        grabAction.canceled -= _ => Release();
         grabAction.Disable();
     }
 

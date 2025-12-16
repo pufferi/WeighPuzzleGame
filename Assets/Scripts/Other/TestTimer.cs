@@ -16,7 +16,6 @@ namespace Test
 
         void Start()
         {
-            Debug.Log(Time.timeScale);
             t = GetComponent<Timer>();
         }
 

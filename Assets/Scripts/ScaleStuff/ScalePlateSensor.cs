@@ -8,7 +8,7 @@ public class ScalePlateSensor : MonoBehaviour
 
     private List<WeightItemComponent> itemsOnPan = new List<WeightItemComponent>();
 
-    private float totalMass = 0f;
+    private int totalMass = 0;
 
     private Rigidbody plateToAddForce;
 
@@ -70,7 +70,7 @@ public class ScalePlateSensor : MonoBehaviour
     // 计算盘子上所有物体的总质量
     void CalculateTotalMass()
     {
-        totalMass = 0f;
+        totalMass = 0;
         foreach (var i in itemsOnPan)
         {
             totalMass += i.realMass;

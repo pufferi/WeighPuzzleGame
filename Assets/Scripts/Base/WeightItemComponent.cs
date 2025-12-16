@@ -3,7 +3,7 @@
 public class WeightItemComponent : MonoBehaviour
 {
     // 真实质量（用于称重逻辑，不是物理引擎的质量）
-    public float realMass = 1.0f;
+    public int realMass = 1;
 
     void Start()
     {
