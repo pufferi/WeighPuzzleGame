@@ -2,6 +2,7 @@
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Checkout : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class Checkout : MonoBehaviour
     public List<TMP_InputField> inputFields;
 
     [SerializeField]
-    private PufferMassGetter pufferMassGetter;
+    private PufferGetter pufferGetter;
 
     private List<int> realPufferMass;
     private List<int> PlayerMeasuredPufferMass;
@@ -18,11 +19,44 @@ public class Checkout : MonoBehaviour
 
     private List<TextMeshProUGUI> realMassText;
     private List<TextMeshProUGUI> playerMeasuredMassText;
+    private List<Image> fishImgs;
 
-    public void CheckAnsers()
+
+    [SerializeField]
+    private TextMeshProUGUI InvalidInputTip_AND_Result_Text;
+
+
+    public void SetupCheckoutUI()
+    {
+        InvalidInputTip_AND_Result_Text.gameObject.SetActive(false);
+        fishImgs = parent_Checkout_Layout.GetComponentsInChildren<Image>(true)
+            .Where(img => img.gameObject.name == "Image_FishIcon")
+            .ToList();
+
+        List<Color> fishColors = pufferGetter.GetAllPufferColor();
+        
+        int loopCount = Mathf.Min(fishImgs.Count, fishColors.Count);
+        for (int i = 0; i < loopCount; i++)
+        {
+            Color fishColor = fishColors[i];
+            fishColor.a = 1f;
+            fishImgs[i].color = fishColor;
+        }
+    }
+
+    public bool CheckAnsers()
     {
         PlayerMeasuredPufferMass = GetPlayerMeasuredMass();
-        realPufferMass = pufferMassGetter.GetAllPufferMass();
+        InvalidInputTip_AND_Result_Text.gameObject.SetActive(true);
+
+        if (PlayerMeasuredPufferMass.Contains(-1))
+        {
+            InvalidInputTip_AND_Result_Text.text = "请输入 1 到 2,147,483,647 之间的整数值";
+            return false;
+        }
+
+
+        realPufferMass = pufferGetter.GetAllPufferMass();
 
      
 
@@ -38,19 +72,50 @@ public class Checkout : MonoBehaviour
         }
 
 
+        float totalScore = 0f;
         for (int i = 0; i < realPufferMass.Count; i++)
         {
-            realMassText[i].text = "它的质量是： " + realPufferMass[i].ToString() ;
+            int realMass = realPufferMass[i];
+            int playerMass = PlayerMeasuredPufferMass[i];
+
+            // 显示真实质量和玩家答案
+            realMassText[i].text = "它的质量是： " + realMass.ToString();
+            playerMeasuredMassText[i].text = "你的答案是：  " + playerMass.ToString();
+
+            // 计算单项得分
+            if (realMass > 0)
+            {
+                float absoluteError = Mathf.Abs(realMass - playerMass);
+                float percentageError = absoluteError / realMass;
+                // 新的计分公式，惩罚与误差的平方成正比，对小误差更宽容
+                float itemScore = Mathf.Max(0f, 100f * (1f - percentageError * percentageError));
+                totalScore += itemScore;
+
+                // 根据答案的准确度设置颜色 (放宽阈值)
+                if (percentageError <= 0.05f) // 误差在5%以内算完美
+                {
+                    playerMeasuredMassText[i].color = Color.green; // 完全正确
+                }
+                else if (percentageError <= 0.3f) // 误差在30%以内算比较接近
+                {
+                    playerMeasuredMassText[i].color = new Color(1.0f, 0.5f, 0.0f); // 橙色
+                }
+                else
+                {
+                    playerMeasuredMassText[i].color = Color.red; // 误差较大
+                }
+            }
+            else
+            {
+                playerMeasuredMassText[i].color = Color.red;
+            }
         }
 
+        // 计算并显示最终平均分
+        float averageScore = totalScore / realPufferMass.Count;
+        InvalidInputTip_AND_Result_Text.text = $"你的平均成绩是: {averageScore:F1} / 100"; // F1表示保留一位小数
 
-        for (int i = 0; i < realPufferMass.Count; i++)
-        {
-            playerMeasuredMassText[i].text = "你的答案是：  " + PlayerMeasuredPufferMass[i].ToString() ;
-        }
-
-
-
+        return true;
 
     }
 
@@ -65,11 +130,14 @@ public class Checkout : MonoBehaviour
         {
             if(int.TryParse(inputField.text, out int value))
             {
-                readList.Add(value);
+                if(value >= 1)
+                    readList.Add(value);
+                else
+                    readList.Add(-1);
             }
             else
             {
-                readList.Add(0); 
+                readList.Add(-1);
             }
         }
         return readList;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class PufferMassGetter : MonoBehaviour
+public class PufferGetter : MonoBehaviour
 {
     [SerializeField]
     private GameObject parent_fishes;
@@ -28,5 +28,16 @@ public class PufferMassGetter : MonoBehaviour
             realPufferMass.Add(item.realMass);
         }
         return realPufferMass;
+    }
+
+    public List<Color> GetAllPufferColor()
+    {
+        List<Color> realPufferColors = new List<Color>();
+        PufferBehaviour[] pufferItems = parent_fishes.GetComponentsInChildren<PufferBehaviour>();
+        foreach (PufferBehaviour item in pufferItems)
+        {
+            realPufferColors.Add(item.GetPufferColor());
+        }
+        return realPufferColors;
     }
 }

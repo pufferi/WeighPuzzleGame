@@ -31,14 +31,17 @@ public class PufferBehaviour : MonoBehaviour
     private ScalePlateSensor _currentPlateSensor;
 
     private Material _pufferMat;
-    private Color _pufferDefaultColor;
+
+    [SerializeField]
+    private Color _pufferDefaultColor = Color.white;
+
     private Coroutine _pufferChangeColorCoroutine;
 
-    void Start()
+    void Awake()
     {
         _originalScale = transform.localScale;
         _pufferMat = GetComponent<Renderer>().material;
-        _pufferDefaultColor = _pufferMat.color;
+        _pufferMat.color = _pufferDefaultColor;
     }
 
     void Update()
@@ -46,6 +49,10 @@ public class PufferBehaviour : MonoBehaviour
         
     }
 
+    public Color GetPufferColor()
+    {
+        return _pufferMat.color;
+    }
 
     public Coroutine PufferChangeColor(Color color, float time = 2f)
     {
