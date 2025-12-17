@@ -27,8 +27,16 @@ public class BasicButtonActions : MonoBehaviour
     [SerializeField]
     private Button FinishButton;
 
+    [SerializeField]
+    private Timer timer;
+
     public void OnFinishButtonClicked()
     {
+        if (timer != null)
+        {
+            timer.StopTimer();
+        }
+
         checkout.SetupCheckoutUI(); 
         
         CheckOutUI.SetActive(true);

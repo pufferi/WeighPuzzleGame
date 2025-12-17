@@ -1885,7 +1885,7 @@ GameObject:
   m_Component:
   - component: {fileID: 512395076}
   m_Layer: 5
-  m_Name: Stuffes
+  m_Name: Stuffs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3461,6 +3461,7 @@ MonoBehaviour:
   inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   CheckOutUI: {fileID: 422740214}
   FinishButton: {fileID: 335254399}
+  timer: {fileID: 650916791}
   checkout: {fileID: 811922727}
   CheckoutButton: {fileID: 1065947494}
 --- !u!1 &894474936
