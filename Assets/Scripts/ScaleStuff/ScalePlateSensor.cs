@@ -79,8 +79,6 @@ public class ScalePlateSensor : MonoBehaviour
 
     public void ApplyExternalForce(Vector3 force)
     {
-        Debug.Log(totalMass);
-        Debug.Log("Applying external force: " + force);
         plateToAddForce.AddForceAtPosition(force, pivotPoint.position);
     }
 }

@@ -11,17 +11,6 @@ public class BasicButtonActions : MonoBehaviour
     [SerializeField]
     private InputActionAsset inputActions;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
 
     public void OnRestartButtonClicked()
@@ -40,10 +29,8 @@ public class BasicButtonActions : MonoBehaviour
 
     public void OnFinishButtonClicked()
     {
-        // 1. 在激活UI之前，先调用Setup方法
         checkout.SetupCheckoutUI(); 
         
-        // 2. 然后再激活UI
         CheckOutUI.SetActive(true);
         FinishButton.enabled = false;
         inputActions.FindActionMap("Player").Disable();

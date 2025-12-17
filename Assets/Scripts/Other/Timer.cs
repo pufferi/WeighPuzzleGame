@@ -4,8 +4,17 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
+    [Header("Timer Settings")]
+    [SerializeField]
+    private float initialTime = 60f;
+    [SerializeField]
+    private bool startOnAwake = true;
+
+    [Header("References")]
     [SerializeField]
     private TextMeshProUGUI timerText;
+    [SerializeField]
+    private BasicButtonActions basicButtonActions; 
 
     private Coroutine _timerCoroutine;
     private float _remainingTime;
@@ -13,12 +22,28 @@ public class Timer : MonoBehaviour
 
     public System.Action OnTimerEnd;
 
+    private void Awake()
+    {
+    
+        OnTimerEnd += basicButtonActions.OnFinishButtonClicked;
+
+        if (startOnAwake)
+        {
+            StartTimer(initialTime);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        OnTimerEnd -= basicButtonActions.OnFinishButtonClicked;
+    }
+
     private void OnDisable()
     {
         StopTimer();
     }
 
-    public void StartTimer(float time = 30f)
+    public void StartTimer(float time)
     {
         if (_isRunning)
         {
@@ -36,9 +61,9 @@ public class Timer : MonoBehaviour
             StopCoroutine(_timerCoroutine);
         }
         _isRunning = false;
-    }
+        }
 
-    public void ResetTimer(float time = 30f)
+    public void ResetTimer(float time)
     {
         StopTimer();
         _remainingTime = time;
@@ -48,13 +73,17 @@ public class Timer : MonoBehaviour
     private IEnumerator Countdown()
     {
         _isRunning = true;
+        UpdateTimerText(); 
+
+        // 解决一下Timescale = 3 出现的跳时间问题 
+        yield return new WaitForSecondsRealtime(1f); 
+
         while (_remainingTime > 0)
         {
-            UpdateTimerText();
-            //_remainingTime -= Time.deltaTime;  timeScale改成3了
             _remainingTime -= Time.unscaledDeltaTime;
-
-            yield return null;
+            UpdateTimerText();
+            
+            yield return null; 
         }
 
         _remainingTime = 0;
@@ -65,7 +94,10 @@ public class Timer : MonoBehaviour
 
     private void UpdateTimerText()
     {
-        int seconds = Mathf.CeilToInt(_remainingTime);
-        timerText.text = $"还有 {seconds} 秒";
+        if (timerText != null)
+        {
+            int seconds = Mathf.CeilToInt(_remainingTime);
+            timerText.text = $"还有 {seconds} 秒";
+        }
     }
 }

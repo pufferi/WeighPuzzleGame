@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using System; // 需要这个来使用 Action
 
 public class GrabableObjectComponent : MonoBehaviour
 {
@@ -31,6 +32,8 @@ public class GrabableObjectComponent : MonoBehaviour
     [SerializeField]
     private float stopDistance = 0.01f;     // consider reached when within this distance
 
+    private Action<InputAction.CallbackContext> _grabPerformedAction;
+    private Action<InputAction.CallbackContext> _grabCanceledAction;
 
 
     void Awake()
@@ -40,24 +43,32 @@ public class GrabableObjectComponent : MonoBehaviour
         grabAction = inputActions.FindActionMap("Player").FindAction("GrabItem");
         currentTargetPosition = transform.position;
 
+        // 初始化委托
+        _grabPerformedAction = _ => Grab();
+        _grabCanceledAction = _ => Release();
     }
 
     void OnEnable()
     {
-        grabAction.performed += _ => Grab();
-        grabAction.canceled += _ => Release();
+        // 使用字段来订阅
+        grabAction.performed += _grabPerformedAction;
+        grabAction.canceled += _grabCanceledAction;
         grabAction.Enable();
     }
 
     void OnDisable()
     {
-        grabAction.performed -= _ => Grab();
-        grabAction.canceled -= _ => Release();
+        // 使用相同的字段来取消订阅
+        grabAction.performed -= _grabPerformedAction;
+        grabAction.canceled -= _grabCanceledAction;
         grabAction.Disable();
     }
 
     void Grab()
     {
+        // 添加一个空引用检查，作为额外的保险
+        if (mainCamera == null) return;
+
         Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.gameObject == gameObject)
         {

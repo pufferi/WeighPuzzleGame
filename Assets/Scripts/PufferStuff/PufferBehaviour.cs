@@ -51,7 +51,7 @@ public class PufferBehaviour : MonoBehaviour
 
     public Color GetPufferColor()
     {
-        return _pufferMat.color;
+        return _pufferDefaultColor;
     }
 
     public Coroutine PufferChangeColor(Color color, float time = 2f)
