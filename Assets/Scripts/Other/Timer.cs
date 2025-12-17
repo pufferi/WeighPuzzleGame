@@ -76,7 +76,7 @@ public class Timer : MonoBehaviour
         UpdateTimerText(); 
 
         // 解决一下Timescale = 3 出现的跳时间问题 
-        yield return new WaitForSecondsRealtime(1f); 
+        yield return new WaitForSecondsRealtime(0.5f); 
 
         while (_remainingTime > 0)
         {
