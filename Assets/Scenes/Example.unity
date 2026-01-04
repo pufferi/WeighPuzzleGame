@@ -3768,6 +3768,7 @@ GameObject:
   - component: {fileID: 1066810051}
   - component: {fileID: 1066810055}
   - component: {fileID: 1066810056}
+  - component: {fileID: 1066810058}
   - component: {fileID: 1066810057}
   m_Layer: 0
   m_Name: Cube
@@ -3786,7 +3787,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -3.59, y: 1.18, z: -5.99}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1283068039}
@@ -3928,11 +3929,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1066810049}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af4d3eb4dfdddfb499a2dab997358182, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  sliderBehaviour: {fileID: 1548551576}
+  billboardText: {fileID: 1066810058}
+  minScale: 0.5
+  maxScale: 1.5
+--- !u!114 &1066810058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1066810049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 49f0fa82dc71a6e47a65fe2c1f26d0b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   textMesh: {fileID: 1283068040}
-  offset: {x: 1.4, y: 1.34, z: 0}
+  offset: {x: 1.4, y: 1.5, z: 0}
   targetTransform: {fileID: 1066810050}
   hideOnStart: 0
   showWeight: 1
@@ -5458,6 +5476,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1548551574}
   - component: {fileID: 1548551575}
+  - component: {fileID: 1548551576}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -5538,6 +5557,19 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1548551576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548551573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a72133e037912e42847b94d97419e8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 1548551575}
 --- !u!1001 &1579750528
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7391,6 +7423,54 @@ Transform:
   - {fileID: 1212879389}
   m_Father: {fileID: 1840963473}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2054068922
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2054068924}
+  - component: {fileID: 2054068923}
+  m_Layer: 0
+  m_Name: Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &2054068923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054068922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c5e17f1e17447c4b8904e8cc87ef323, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftup: {fileID: 670910464}
+  rightup: {fileID: 675447626}
+  leftb: {fileID: 1537258395}
+  rightb: {fileID: 609794756}
+--- !u!4 &2054068924
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054068922}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.2557642, y: 1.3499153, z: -4.4577374}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2071787916
 GameObject:
   m_ObjectHideFlags: 0
@@ -7973,7 +8053,7 @@ Transform:
   m_GameObject: {fileID: 7817465458128873381}
   serializedVersion: 2
   m_LocalRotation: {x: 1, y: -0, z: -0, w: -0.000000113246855}
-  m_LocalPosition: {x: 0, y: 0.012580649, z: -0.027777782}
+  m_LocalPosition: {x: 0, y: 0.0133, z: -0.027777782}
   m_LocalScale: {x: -3.2775726, y: -0.9321232, z: -1.5652559}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7998,7 +8078,7 @@ Transform:
   m_GameObject: {fileID: 7402107868980681339}
   serializedVersion: 2
   m_LocalRotation: {x: 1, y: -0, z: -0, w: -0.000000113246855}
-  m_LocalPosition: {x: 0, y: 0.012580641, z: 0.027777782}
+  m_LocalPosition: {x: 0, y: 0.0133, z: 0.027777782}
   m_LocalScale: {x: -3.2775726, y: -0.9321232, z: -1.5652559}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8285,7 +8365,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5860091479243874287}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 3
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -8313,15 +8393,15 @@ HingeJoint:
   m_GameObject: {fileID: 5860091479243874287}
   m_ConnectedBody: {fileID: 780177616}
   m_ConnectedArticulationBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0.0020000022, z: 0}
+  m_Anchor: {x: 0, y: 0.013, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -5.931604e-22, y: 0.4808517, z: -0.000000030527456}
+  m_ConnectedAnchor: {x: -4.7452835e-21, y: 3.053192, z: -0.00000022895567}
   serializedVersion: 2
   m_UseSpring: 1
   m_Spring:
     spring: 50
-    damper: 2
+    damper: 6.4
     targetPosition: 0
   m_UseMotor: 0
   m_Motor:
@@ -8449,7 +8529,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7402107868980681339}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -8463,7 +8543,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -8534,7 +8614,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7817465458128873381}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -8548,7 +8628,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -8595,3 +8675,4 @@ SceneRoots:
   - {fileID: 214100390}
   - {fileID: 2108671144}
   - {fileID: 1579750528}
+  - {fileID: 2054068924}

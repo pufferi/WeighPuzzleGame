@@ -8,7 +8,7 @@ public class ScalePlateSensor : MonoBehaviour
 
     private List<WeightItemComponent> itemsOnPan = new List<WeightItemComponent>();
 
-    private int totalMass = 0;
+    public int TotalMass { get; private set; }
 
     private Rigidbody plateToAddForce;
 
@@ -34,14 +34,16 @@ public class ScalePlateSensor : MonoBehaviour
     {
         CalculateTotalMass();
 
-        if (totalMass > 0)
+        if (TotalMass > 0)
         {
             //Debug.Log(totalMass);
 
 
-            Vector3 gravityForce = forceDirection * totalMass * ForceScale;
-
-            plateToAddForce.AddForceAtPosition(gravityForce, pivotPoint.position);
+            Vector3 gravityForce = forceDirection * TotalMass * ForceScale;
+            if(isBottomSensor)
+                plateToAddForce.AddForceAtPosition(gravityForce, pivotPoint.position);
+            else
+                plateToAddForce.AddForceAtPosition(gravityForce, new Vector3(pivotPoint.position.x,pivotPoint.position.y-5f, pivotPoint.position.z));
         }
     }
 
@@ -70,11 +72,12 @@ public class ScalePlateSensor : MonoBehaviour
     // 计算盘子上所有物体的总质量
     void CalculateTotalMass()
     {
-        totalMass = 0;
+        int currentMass = 0;
         foreach (var i in itemsOnPan)
         {
-            totalMass += i.realMass;
+            currentMass += i.realMass;
         }
+        TotalMass = currentMass;
     }
 
     public void ApplyExternalForce(Vector3 force)

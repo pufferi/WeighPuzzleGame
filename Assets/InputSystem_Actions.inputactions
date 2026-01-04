@@ -24,6 +24,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "ClickWeight",
+                    "type": "Button",
+                    "id": "0aee35e1-c45f-4856-b788-e46db38e8ae8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "GrabItem",
                     "type": "Button",
                     "id": "6fbb50d4-309a-45b2-b02e-3c134694570c",
@@ -174,6 +183,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "ClickFish",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b7060d4d-7085-4070-bb98-2dcc7bc49dcf",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ClickWeight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

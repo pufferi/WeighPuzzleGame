@@ -81,13 +81,13 @@ timeBeforeJump *= 3;
          UpdateClickCount();
 
       if (_currentClickCount <= 0)
-   {
-  pufferBehaviour.PufferDeflate(pufferInflateTime);
-  pufferBehaviour.PufferResetColor();
-                    pufferBehaviour.PufferStopSplash();
-    billboardText.Hide();
-    StartCoroutine(JumpAfterDelay());
-    }
+           {
+          pufferBehaviour.PufferDeflate(pufferInflateTime);
+          pufferBehaviour.PufferResetColor();
+                            pufferBehaviour.PufferStopSplash();
+            billboardText.Hide();
+            StartCoroutine(JumpAfterDelay());
+            }
  }
         }
     }

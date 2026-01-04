@@ -99,9 +99,16 @@ public class BillboardText : MonoBehaviour
         return textMesh != null && textMesh.gameObject.activeInHierarchy;
     }
 
+    /// <summary>
+    /// 获取是否显示质量
+ /// </summary>
+    public bool IsShowingWeight()
+    {
+   return showWeight;
+    }
 
     public TextMeshPro GetTextMesh()
     {
         return textMesh;
-    }
+  }
 }
