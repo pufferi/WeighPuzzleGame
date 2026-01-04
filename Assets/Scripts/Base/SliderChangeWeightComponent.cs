@@ -25,6 +25,14 @@ public class SliderChangeWeightComponent : MonoBehaviour
     [SerializeField]
     private float maxScale;
 
+    private void Awake()
+    {
+        if (inputActions != null)
+        {
+            _clickWeightAction = inputActions.FindActionMap("Player").FindAction("ClickWeight");
+        }
+    }
+
     void Start()
     {
         _weightItem = GetComponent<WeightItemComponent>();
@@ -33,20 +41,24 @@ public class SliderChangeWeightComponent : MonoBehaviour
         {
             _initialMass = _weightItem.realMass;
         }
-
-        // 设置输入事件
-        _clickWeightAction = inputActions.FindActionMap("Player").FindAction("ClickWeight");
-   _clickWeightAction.performed += OnClickWeight;
     }
 
     private void OnEnable()
     {
-        _clickWeightAction?.Enable();
+        if (_clickWeightAction != null)
+        {
+            _clickWeightAction.Enable();
+            _clickWeightAction.performed += OnClickWeight;
+        }
     }
 
     private void OnDisable()
     {
-        _clickWeightAction?.Disable();
+        if (_clickWeightAction != null)
+        {
+            _clickWeightAction.performed -= OnClickWeight;
+            _clickWeightAction.Disable();
+        }
     }
 
     /// <summary>
@@ -87,17 +99,38 @@ public class SliderChangeWeightComponent : MonoBehaviour
     {
         // 更新真实质量
         if (_weightItem != null)
- {
-    _weightItem.realMass = newMass;
-    }
+        {
+            _weightItem.realMass = newMass;
+        }
 
         // 更新物体缩放
         transform.localScale = newScale;
 
-   // 如果 BillboardText 显示质量，同步更新
+        // 如果 BillboardText 显示质量，同步更新
         if (billboardText != null && billboardText.IsShowingWeight())
         {
-      billboardText.SetText(newMass.ToString());
+            if (billboardText.IsLv7())
+            {
+                // Level 7 特殊处理：显示虚假质量
+                // 真实质量范围是 _initialMass 到 2*_initialMass
+                // 虚假质量范围是 1 到 2000000
+                // 假设初始真实质量对应虚假质量 1000000
+                
+                // 计算当前质量相对于初始质量的比例
+                float ratio = (float)newMass / _initialMass;
+                
+                // 计算虚假质量：1000000 * ratio
+                int fakeMass = Mathf.RoundToInt(1000000f * ratio);
+                
+                // 确保最小值为 1
+                fakeMass = Mathf.Max(1, fakeMass);
+                
+                billboardText.SetText(fakeMass.ToString());
+            }
+            else
+            {
+                billboardText.SetText(newMass.ToString());
+            }
         }
     }
 

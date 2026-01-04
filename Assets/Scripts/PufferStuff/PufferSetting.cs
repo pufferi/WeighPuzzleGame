@@ -31,14 +31,30 @@ public class PufferSetting : MonoBehaviour
     private float _currentClickCount;
     private bool _canBeClicked = false;
 
+    private void Awake()
+    {
+        if (inputActions != null)
+        {
+            _clickFishAction = inputActions.FindActionMap("Player").FindAction("ClickFish");
+        }
+    }
+
     private void OnEnable()
     {
-        _clickFishAction?.Enable();
+        if (_clickFishAction != null)
+        {
+            _clickFishAction.Enable();
+            _clickFishAction.performed += OnClickFish;
+        }
     }
 
     private void OnDisable()
     {
-        _clickFishAction?.Disable();
+        if (_clickFishAction != null)
+        {
+            _clickFishAction.performed -= OnClickFish;
+            _clickFishAction.Disable();
+        }
     }
 
     void Start()
@@ -54,9 +70,6 @@ public class PufferSetting : MonoBehaviour
   
         pufferInflateTime *= 3;//timescale调的3
 timeBeforeJump *= 3;
-
-        _clickFishAction = inputActions.FindActionMap("Player").FindAction("ClickFish");
-        _clickFishAction.performed += OnClickFish;
 
         if (shouldJump)
         {

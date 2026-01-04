@@ -21,7 +21,9 @@ public class BillboardText : MonoBehaviour
 
     private Camera _mainCamera;
 
-    
+    [SerializeField]
+    private bool isLv7 = false;
+
 
     private void Awake()
     {
@@ -36,9 +38,14 @@ public class BillboardText : MonoBehaviour
         if(showWeight)
         {
             WeightItemComponent weightConponent = GetComponent<WeightItemComponent>();
-            textMesh.text = weightConponent.realMass.ToString();
-
-
+            if (isLv7)
+            {
+                textMesh.text = "1000000";
+            }
+            else
+            {
+                textMesh.text = weightConponent.realMass.ToString();
+            }
         }
     }
 
@@ -100,8 +107,16 @@ public class BillboardText : MonoBehaviour
     }
 
     /// <summary>
+    /// 获取是否是 Level 7
+    /// </summary>
+    public bool IsLv7()
+    {
+        return isLv7;
+    }
+
+    /// <summary>
     /// 获取是否显示质量
- /// </summary>
+    /// </summary>
     public bool IsShowingWeight()
     {
    return showWeight;

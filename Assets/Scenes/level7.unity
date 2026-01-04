@@ -2749,6 +2749,7 @@ MonoBehaviour:
   parent_Checkout_Layout: {fileID: 713551992}
   inputFields: []
   pufferGetter: {fileID: 1152611895}
+  isLevel7: 1
   InvalidInputTip_AND_Result_Text: {fileID: 2098131407}
 --- !u!1 &832575517
 GameObject:
@@ -3335,6 +3336,8 @@ MonoBehaviour:
     text: "\u6700\u540E\u4E00\u5929\uFF0C\u597D\u597D\u5DE5\u4F5C\uFF01"
   - icon: {fileID: 21300000, guid: 5cdd9c31f30727b4190e72886c96efb9, type: 3}
     text: "\u8BF4\u4E0D\u5B9A\u6211\u4F1A\u653E\u4F60\u4E00\u9A6C~"
+  - icon: {fileID: 21300000, guid: 5cdd9c31f30727b4190e72886c96efb9, type: 3}
+    text: "\u4ECA\u5929\u662F\u7ED9\u6211\u79F0\u91CD\u54E6\u3002"
   speed: 0.07
   OnDialogueEnd:
     m_PersistentCalls:
@@ -3922,7 +3925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a1d5a6b9b803d34bb492ea9d01fea43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  realMass: 10000
+  realMass: 1
 --- !u!114 &1066810057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3957,6 +3960,7 @@ MonoBehaviour:
   targetTransform: {fileID: 1066810050}
   hideOnStart: 0
   showWeight: 1
+  isLv7: 1
 --- !u!1 &1093030635
 GameObject:
   m_ObjectHideFlags: 0
@@ -5536,7 +5540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a1d5a6b9b803d34bb492ea9d01fea43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  realMass: 1
+  realMass: 2
 --- !u!114 &1646852436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5612,6 +5616,7 @@ MonoBehaviour:
   targetTransform: {fileID: 1646852441}
   hideOnStart: 1
   showWeight: 0
+  isLv7: 0
 --- !u!1 &1650573660
 GameObject:
   m_ObjectHideFlags: 0
