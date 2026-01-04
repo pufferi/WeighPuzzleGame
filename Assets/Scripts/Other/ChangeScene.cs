@@ -17,4 +17,9 @@ public class ChangeScene : MonoBehaviour
     {
         SceneManager.LoadScene(idx);
     }
+
+    public void ChangeToNextScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
 }
