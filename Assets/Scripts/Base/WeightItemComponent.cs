@@ -13,8 +13,8 @@ public class WeightItemComponent : MonoBehaviour
             rb.mass = 0.0001f;
 
             // 摩擦
-            rb.drag = 5f;        // 线性阻力，防止物体乱飞
-            rb.angularDrag = 5f; // 角阻力，防止物体乱转
+            rb.drag = 10f;        // 线性阻力，防止物体乱飞
+            rb.angularDrag = 10f; // 角阻力，防止物体乱转
         }
     }
 }

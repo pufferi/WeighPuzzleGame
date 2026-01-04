@@ -22,6 +22,8 @@ public class Timer : MonoBehaviour
 
     public System.Action OnTimerEnd;
 
+    public bool HasTimer = true;
+
     private void Awake()
     {
     

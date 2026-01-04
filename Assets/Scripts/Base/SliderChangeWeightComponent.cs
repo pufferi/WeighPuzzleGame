@@ -17,6 +17,7 @@ public class SliderChangeWeightComponent : MonoBehaviour
     private InputAction _clickWeightAction;
     private WeightItemComponent _weightItem;
     private Vector3 _initialScale;
+    private int _initialMass;
 
     [SerializeField]
     private float minScale;
@@ -28,6 +29,10 @@ public class SliderChangeWeightComponent : MonoBehaviour
     {
         _weightItem = GetComponent<WeightItemComponent>();
         _initialScale = transform.localScale;
+        if (_weightItem != null)
+        {
+            _initialMass = _weightItem.realMass;
+        }
 
         // 设置输入事件
         _clickWeightAction = inputActions.FindActionMap("Player").FindAction("ClickWeight");
@@ -69,7 +74,8 @@ public class SliderChangeWeightComponent : MonoBehaviour
          }
 
              // 绑定 slider 到当前物体
-                sliderBehaviour.BindTo(this, _weightItem.realMass, _initialScale, minScale, maxScale);
+                // 使用 _initialMass 而不是 _weightItem.realMass 作为基准质量
+                sliderBehaviour.BindTo(this, _initialMass, _initialScale, minScale, maxScale);
             }
         }
     }
