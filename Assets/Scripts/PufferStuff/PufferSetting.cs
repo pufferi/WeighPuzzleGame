@@ -20,10 +20,7 @@ public class PufferSetting : MonoBehaviour
     private float pufferClickCount = 5;
 
     [SerializeField]
-    private TextMeshPro clickCountTextMesh;
-
-    [SerializeField]
-    private Vector3 _textOffset = new Vector3(0, 1.5f, 0);
+    private BillboardText billboardText;
 
     private PufferBehaviour pufferBehaviour;
 
@@ -34,67 +31,77 @@ public class PufferSetting : MonoBehaviour
     private float _currentClickCount;
     private bool _canBeClicked = false;
 
+    private void Awake()
+    {
+        if (inputActions != null)
+        {
+            _clickFishAction = inputActions.FindActionMap("Player").FindAction("ClickFish");
+        }
+    }
+
     private void OnEnable()
     {
-        _clickFishAction?.Enable();
+        if (_clickFishAction != null)
+        {
+            _clickFishAction.Enable();
+            _clickFishAction.performed += OnClickFish;
+        }
     }
 
     private void OnDisable()
     {
-        _clickFishAction?.Disable();
+        if (_clickFishAction != null)
+        {
+            _clickFishAction.performed -= OnClickFish;
+            _clickFishAction.Disable();
+        }
     }
 
     void Start()
     {
         pufferBehaviour = GetComponent<PufferBehaviour>();
-        clickCountTextMesh.gameObject.SetActive(false);
+        
+// 设置billboard跟随目标
+        if (billboardText != null)
+    {
+     billboardText.SetTarget(pufferBehaviour.transform);
+            billboardText.Hide();
+     }
   
         pufferInflateTime *= 3;//timescale调的3
-        timeBeforeJump *= 3;
-
-        _clickFishAction = inputActions.FindActionMap("Player").FindAction("ClickFish");
-        _clickFishAction.performed += OnClickFish;
+timeBeforeJump *= 3;
 
         if (shouldJump)
         {
             StartCoroutine(JumpAfterDelay());
-        }
+ }
     }
 
-    private void Update()
-    {
-        if (clickCountTextMesh != null && clickCountTextMesh.gameObject.activeInHierarchy)
-        {
-            clickCountTextMesh.transform.position = pufferBehaviour.transform.position + _textOffset;
-            clickCountTextMesh.transform.LookAt(Camera.main.transform);
-        }
-    }
-
-    private void OnClickFish(InputAction.CallbackContext context)
+ private void OnClickFish(InputAction.CallbackContext context)
     {
 
-        if (!_canBeClicked || !clickCountTextMesh.gameObject.activeInHierarchy)
+    if (!_canBeClicked || billboardText == null || !billboardText.IsVisible())
         {
             return;
         }
 
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+     Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            if (hit.collider.gameObject == gameObject)
+       if (hit.collider.gameObject == gameObject)
             {
-                _currentClickCount--;
-                UpdateClickCount();
+     _currentClickCount--;
+         UpdateClickCount();
 
-                if (_currentClickCount <= 0)
-                {
-                    pufferBehaviour.PufferDeflate(pufferInflateTime);
-                    pufferBehaviour.PufferResetColor();
-                    pufferBehaviour.PufferStopSplash();
-                    clickCountTextMesh.gameObject.SetActive(false);
-                    StartCoroutine(JumpAfterDelay());
-                }
+      if (_currentClickCount <= 0)
+           {
+          pufferBehaviour.PufferDeflate(pufferInflateTime);
+          pufferBehaviour.PufferResetColor();
+                            pufferBehaviour.PufferStopSplash();
+            billboardText.Hide();
+            StartCoroutine(JumpAfterDelay());
             }
+ }
         }
     }
 
@@ -104,14 +111,14 @@ public class PufferSetting : MonoBehaviour
         _currentClickCount = pufferClickCount;
         yield return new WaitForSeconds(timeBeforeJump);
 
-        _canBeClicked = true;
+      _canBeClicked = true;
         UpdateClickCount();
-        clickCountTextMesh.gameObject.SetActive(true);
+        billboardText.Show();
         Coroutine inflateCoroutine = pufferBehaviour.PufferInflate(pufferInflateTime);
         Coroutine changeColorCoroutine = pufferBehaviour.PufferChangeColor(Color.red, pufferInflateTime);
 
 
-        yield return inflateCoroutine;
+      yield return inflateCoroutine;
         yield return changeColorCoroutine;
 
         pufferBehaviour.PufferSplash();
@@ -119,6 +126,6 @@ public class PufferSetting : MonoBehaviour
 
     public void UpdateClickCount()
     {
-        clickCountTextMesh.text = $"{_currentClickCount}";
+        billboardText.SetText($"{_currentClickCount}");
     }
 }

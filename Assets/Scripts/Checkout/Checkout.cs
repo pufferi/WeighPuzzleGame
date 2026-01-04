@@ -21,6 +21,9 @@ public class Checkout : MonoBehaviour
     private List<TextMeshProUGUI> playerMeasuredMassText;
     private List<Image> fishImgs;
 
+    [SerializeField]
+    private bool isLevel7 = false;
+
 
     [SerializeField]
     private TextMeshProUGUI InvalidInputTip_AND_Result_Text;
@@ -46,6 +49,8 @@ public class Checkout : MonoBehaviour
 
     public bool CheckAnsers()
     {
+
+            
         PlayerMeasuredPufferMass = GetPlayerMeasuredMass();
         InvalidInputTip_AND_Result_Text.gameObject.SetActive(true);
 
@@ -55,6 +60,11 @@ public class Checkout : MonoBehaviour
             return false;
         }
 
+        if (isLevel7)
+        {
+            Check4lv7();
+            return true;
+        }
 
         realPufferMass = pufferGetter.GetAllPufferMass();
 
@@ -153,5 +163,52 @@ public class Checkout : MonoBehaviour
         playerMeasuredMassText = parent_Checkout_Layout.GetComponentsInChildren<TextMeshProUGUI>(true)
             .Where(textMesh => textMesh.gameObject.name == "Text_PlayerAnser")
             .ToList();
+    }
+
+    private void Check4lv7()
+    {
+        GetMassText();
+        
+        for(int i = 0; i < inputFields.Count; i++)
+        {
+            inputFields[i].gameObject.SetActive(false);
+        }
+
+        int realMass = 2000000;
+        int playerMass = PlayerMeasuredPufferMass.Count > 0 ? PlayerMeasuredPufferMass[0] : 0;
+
+        if (realMassText.Count > 0)
+            realMassText[0].text = "它的质量是： " + realMass.ToString();
+        
+        if (playerMeasuredMassText.Count > 0)
+            playerMeasuredMassText[0].text = "你的答案是：  " + playerMass.ToString();
+
+        float totalScore = 0f;
+        if (realMass > 0)
+        {
+            float absoluteError = Mathf.Abs(realMass - playerMass);
+            float percentageError = absoluteError / realMass;
+            
+            float itemScore = Mathf.Max(0f, 100f * (1f - percentageError * percentageError));
+            totalScore = itemScore;
+
+            if (playerMeasuredMassText.Count > 0)
+            {
+                if (percentageError <= 0.05f)
+                {
+                    playerMeasuredMassText[0].color = Color.green;
+                }
+                else if (percentageError <= 0.3f)
+                {
+                    playerMeasuredMassText[0].color = new Color(1.0f, 0.5f, 0.0f);
+                }
+                else
+                {
+                    playerMeasuredMassText[0].color = Color.red;
+                }
+            }
+        }
+
+        InvalidInputTip_AND_Result_Text.text = $"你的平均成绩是: {totalScore:F1} / 100";
     }
 }

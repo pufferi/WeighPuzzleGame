@@ -6,13 +6,34 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Intro.unity
+    path: Assets/Scenes/MainPage.unity
+    guid: a31c5beb464ca4ad89d814f5fadb27bb
+  - enabled: 1
+    path: Assets/Scenes/Intro_Dialogue.unity
     guid: df558caeaadda5945904c0e03211b6ad
   - enabled: 1
-    path: Assets/Scenes/Level1.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/level1.unity
+    guid: 49de06069299b86449d5fabb0ac75cf2
   - enabled: 1
-    path: Assets/Scenes/Level2.unity
-    guid: 3902174f4cec27147a88e2d546679650
+    path: Assets/Scenes/level2.unity
+    guid: be8a5f8e19c193d4d8b408e5566004bf
+  - enabled: 1
+    path: Assets/Scenes/level3.unity
+    guid: c49de84fe637b9a48b65a4fbcdd28dea
+  - enabled: 1
+    path: Assets/Scenes/level4.unity
+    guid: fa3cead7fde922b48b1e95af004ed0ea
+  - enabled: 1
+    path: Assets/Scenes/level5.unity
+    guid: 19969778564f72a42b1c6470eb284c8e
+  - enabled: 1
+    path: Assets/Scenes/level6.unity
+    guid: cbc049b517d243d40b2b2ae7639240bf
+  - enabled: 1
+    path: Assets/Scenes/level7.unity
+    guid: 4c13b62a9df58294784a1273ff736c4f
+  - enabled: 1
+    path: Assets/Scenes/End_Dialogue.unity
+    guid: f4da0f6e109b28244879f06b0003a067
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
