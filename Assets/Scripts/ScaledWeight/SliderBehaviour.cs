@@ -86,23 +86,14 @@ public class SliderBehaviour : MonoBehaviour
     {
         if (_currentTarget != null)
         {
-            // 计算当前质量在范围内的比例 (0到1)
-            // 范围是 _minMass 到 _maxMass
+
             float t = Mathf.InverseLerp(_minMass, _maxMass, value);
 
             // 使用 Lerp 在 minScale 和 maxScale 之间插值
             float currentScaleFactor = Mathf.Lerp(_targetMinScale, _targetMaxScale, t);
             
-            // 应用缩放因子到初始缩放
-            // 注意：这里假设 minScale 和 maxScale 是相对于初始缩放的倍数，或者是绝对缩放值
-            // 根据需求描述 "调节slider时同步调節realMass和物體的scale"，通常意味着線性插值
-            // 如果 minScale/maxScale 是绝对值（例如 0.5 到 2.0），则直接乘以初始缩放的单位向量可能更合适
-            // 但为了保持物体比例，我们通常缩放初始 Scale
-            
-            // 假设 minScale 和 maxScale 是缩放倍率 (例如 0.5x 到 2.0x)
             Vector3 newScale = _initialScale * currentScaleFactor;
             
-            // 通知目标更新质量和缩放
             _currentTarget.OnMassChanged((int)value, newScale);
         }
     }
